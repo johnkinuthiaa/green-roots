@@ -8,5 +8,5 @@ public interface ProjectService {
     ProjectDto updateProject(Project projectDetails,Long projectId);
     ProjectDto findProjectById(Long projectId);
     ProjectDto findProjectByName(String projectName);
-    ProjectDto findDeleteProjectById(Long userId,Long projectId);
+    ProjectDto deleteProjectById(Long userId,Long projectId);
 }

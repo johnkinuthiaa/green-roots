@@ -26,6 +26,10 @@ public class Project {
     private Long totalArea;
     @Lob
     private String goal;
+    @Lob
+    private String summary;
+    private Long totalTreesPlanted;
+    private String updates;
 //    @ManyToOne
 //    private Organization organization;
 }
