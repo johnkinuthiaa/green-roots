@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Configuration
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter{
     private final JwtService jwtService;
     private final ApplicationContext applicationContext;
@@ -27,13 +29,15 @@ public class JwtFilter extends OncePerRequestFilter{
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
         String authHeader =request.getHeader("Authorization");
         String username =null;
         String token =null;
         if(authHeader !=null &&authHeader.startsWith("Bearer")){
             token =authHeader.substring(7);
             username = jwtService.extractUsernameFromToken(token);
+        }else{
+            log.warn("expired jwt token");
         }
         if(username !=null &&SecurityContextHolder.getContext().getAuthentication() ==null){
             UserDetails userDetails =applicationContext.getBean(MyUserDetailsService.class).loadUserByUsername(username);
@@ -42,10 +46,17 @@ public class JwtFilter extends OncePerRequestFilter{
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }else{
-                logger.fatal("jwt token is expired");
+                log.warn("jwt token is expired");
             }
+        }else{
+            log.warn("expired jwt token");
         }
-        filterChain.doFilter(request,response);
+        try{
+            filterChain.doFilter(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }
