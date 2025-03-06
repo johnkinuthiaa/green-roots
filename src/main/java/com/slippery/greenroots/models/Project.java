@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,12 +15,17 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Users {
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
-    private String username;
-    private String email;
-    private String password;
-    private String role;
+    private String name;
+    private String location;
+    private LocalDateTime startDate;
+    private String status;
+    private Long totalArea;
+    @Lob
+    private String goal;
+    @ManyToOne
+    private Organization organization;
 }

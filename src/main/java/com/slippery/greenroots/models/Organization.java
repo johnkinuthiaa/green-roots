@@ -6,19 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class Users {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
-    private String username;
-    private String email;
-    private String password;
-    private String role;
+    private String name;
+    private String goal;
+    @OneToMany
+    private List<Project> projectsInOrganization;
+    @OneToMany
+    private List<Users> usersInOrganization;
 }
