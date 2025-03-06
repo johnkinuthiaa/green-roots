@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -69,20 +68,17 @@ public class UserServiceImplementation implements UserService {
         if(authentication.isAuthenticated()){
             var token =jwtService.generateJwtToken(username);
             response.setAccessKey(token);
-            authentication.setAuthenticated(true);
             response.setMessage("User authenticated successfully !");
             response.setStatusCode(200);
-        }else{
-            authentication.setAuthenticated(false);
-            response.setMessage("User not authenticated");
-            response.setStatusCode(401);
+            return response;
         }
-
-        return null;
+        response.setMessage("User not authenticated");
+        response.setStatusCode(401);
+        return response;
     }
 
     @Override
-    public UserDto findUserById(UUID userId) {
+    public UserDto findUserById(Long userId) {
         UserDto response =new UserDto();
         var user =repository.findById(userId);
         if(user.isEmpty()){
@@ -97,7 +93,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UserDto deleteUserById(UUID userId) {
+    public UserDto deleteUserById(Long userId) {
         UserDto response =new UserDto();
         var user =findUserById(userId);
         if(user.getStatusCode() !=200){

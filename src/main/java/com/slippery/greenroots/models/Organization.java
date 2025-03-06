@@ -17,11 +17,11 @@ import java.util.UUID;
 public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
     private String name;
     private String goal;
-    @OneToMany
-    private List<Project> projectsInOrganization;
-    @OneToMany
-    private List<Users> usersInOrganization;
+//    @OneToMany
+//    private List<Project> projectsInOrganization;
+//    @OneToMany
+//    private List<Users> usersInOrganization;
 }

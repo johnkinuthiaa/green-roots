@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
     private String name;
     private String location;
     private LocalDateTime startDate;
@@ -26,6 +26,6 @@ public class Project {
     private Long totalArea;
     @Lob
     private String goal;
-    @ManyToOne
-    private Organization organization;
+//    @ManyToOne
+//    private Organization organization;
 }
