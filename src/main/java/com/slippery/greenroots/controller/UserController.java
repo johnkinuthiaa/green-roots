@@ -3,8 +3,9 @@ package com.slippery.greenroots.controller;
 import com.slippery.greenroots.dto.UserDto;
 import com.slippery.greenroots.models.Users;
 import com.slippery.greenroots.service.UserService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -16,24 +17,24 @@ public class UserController{
     public UserController(UserService service) {
         this.service = service;
     }
-
-    public UserDto registerUser(Users users) {
-        return null;
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> registerUser(@RequestBody Users users) {
+        return ResponseEntity.ok(service.registerUser(users));
     }
-
-    public UserDto loginUser(Users users) {
-        return null;
+    @GetMapping("/login")
+    public ResponseEntity<UserDto> loginUser(@RequestBody Users users) {
+        return ResponseEntity.ok(service.loginUser(users));
     }
-
-    public UserDto findUserById(UUID userId) {
-        return null;
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> findUserById(@PathVariable UUID userId) {
+        return ResponseEntity.ok(service.findUserById(userId));
     }
-
-    public UserDto deleteUserById(UUID userId) {
-        return null;
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<UserDto> deleteUserById(@PathVariable UUID userId) {
+        return ResponseEntity.ok(service.deleteUserById(userId));
     }
-
-    public UserDto findAllUsers() {
-        return null;
+    @GetMapping("/all")
+    public ResponseEntity<UserDto> findAllUsers() {
+        return ResponseEntity.ok(service.findAllUsers());
     }
 }

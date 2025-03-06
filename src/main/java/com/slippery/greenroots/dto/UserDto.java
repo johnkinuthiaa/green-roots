@@ -15,4 +15,5 @@ public class UserDto {
     private Integer statusCode;
     private Users user;
     private List<Users> users;
+    private String accessKey;
 }
