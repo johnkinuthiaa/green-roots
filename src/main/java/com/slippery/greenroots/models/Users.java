@@ -26,7 +26,7 @@ public class Users {
     private String role;
     private LocalDateTime joinedOn;
     @JsonIgnore
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Organization> organizationCreated;
     @ManyToMany
     private List<Organization> organizationsJoined;

@@ -39,6 +39,7 @@ public class ProjectServiceImplementation implements ProjectService {
         }
         projectDetails.setCreatedOn(LocalDateTime.now());
         projectDetails.setCreatedBy(user.getUser());
+        projectDetails.setCreatedBy(user.getUser());
         repository.save(projectDetails);
         response.setStatusCode(200);
         response.setMessage("New project created");

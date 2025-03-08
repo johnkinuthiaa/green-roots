@@ -36,16 +36,23 @@ public class OrganizationServiceImpl implements OrganizationService {
         var existsByName =repository.findAll().stream()
                 .filter(organization1 -> organization1.getName().equalsIgnoreCase(organization.getName()))
                 .toList();
-        if(existsByName.isEmpty()){
+        if(!existsByName.isEmpty()){
             response.setMessage("Organization with the name "+ organization.getName()+" already exists");
             response.setStatusCode(300);
             return response;
         }
+
         organization.setProjectsInOrganization(new ArrayList<>());
         organization.setUsersInOrganization(new ArrayList<>());
         organization.setOrganizationCreator(user.getUser());
+
+        var userOrganizations =user.getUser().getOrganizationCreated();
+        userOrganizations.add(organization);
+        user.getUser().setOrganizationCreated(userOrganizations);
         repository.save(organization);
+        userRepository.save(user.getUser());
         response.setMessage("organization created successfully");
+        response.setOrganization(organization);
         response.setStatusCode(200);
         return response;
     }
