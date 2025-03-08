@@ -15,12 +15,12 @@ public class ProjectController  {
         this.service = service;
     }
     @PostMapping("/create")
-    public ResponseEntity<ProjectDto> createNewProject(@RequestBody Project projectDetails) {
-        return ResponseEntity.ok(service.createNewProject(projectDetails));
+    public ResponseEntity<ProjectDto> createNewProject(@RequestBody Project projectDetails,@RequestParam Long userId) {
+        return ResponseEntity.ok(service.createNewProject(projectDetails,userId));
     }
     @PutMapping("/update")
-    public ResponseEntity<ProjectDto> updateProject(@RequestBody Project projectDetails,@RequestParam Long projectId) {
-        return ResponseEntity.ok(service.updateProject(projectDetails, projectId));
+    public ResponseEntity<ProjectDto> updateProject(@RequestBody Project projectDetails,@RequestParam Long projectId,@RequestParam Long userId) {
+        return ResponseEntity.ok(service.updateProject(projectDetails, projectId,userId));
     }
     @GetMapping("/{projectId}/get")
     public ResponseEntity<ProjectDto> findProjectById(@PathVariable Long projectId) {

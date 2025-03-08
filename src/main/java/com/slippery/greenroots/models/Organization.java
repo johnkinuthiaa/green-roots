@@ -20,8 +20,10 @@ public class Organization {
     private Long id;
     private String name;
     private String goal;
-//    @OneToMany
-//    private List<Project> projectsInOrganization;
-//    @OneToMany
-//    private List<Users> usersInOrganization;
+    @OneToMany
+    private List<Project> projectsInOrganization;
+    @ManyToMany
+    private List<Users> usersInOrganization;
+    @ManyToOne
+    private Users organizationCreator;
 }

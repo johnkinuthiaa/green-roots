@@ -32,4 +32,7 @@ public class Project {
     private String updates;
 //    @ManyToOne
 //    private Organization organization;
+    @ManyToOne
+    private Users createdBy;
+    private LocalDateTime createdOn;
 }

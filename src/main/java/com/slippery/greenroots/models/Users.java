@@ -1,5 +1,6 @@
 package com.slippery.greenroots.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,4 +25,10 @@ public class Users {
     private String password;
     private String role;
     private LocalDateTime joinedOn;
+    @JsonIgnore
+    @OneToMany
+    private List<Organization> organizationCreated;
+    @ManyToMany
+    private List<Organization> organizationsJoined;
+
 }
